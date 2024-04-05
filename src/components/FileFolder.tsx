@@ -1,39 +1,44 @@
 import { TableRow, TableCell } from "@mui/material";
-interface Folder {
-  type: string;
-  children: { [key: string]: File | Folder | {} };
-}
+import { Folder, File } from "@/type";
+
 interface FileComponentProps {
      fileName: string;
-     file: File | Folder | { };
+     file: File | Folder ;
      selected: boolean;
+     click: () => void;
      onSelect: () => void;
 }
 const FileComponent: React.FC<FileComponentProps> = ({ 
      fileName,
      file,
+     click,
      selected,
      onSelect 
 }) => {
-     const { size, type } = file;
+     const { type, size } = file;
    
-     const handleCheckboxChange = () => {
+     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+       e.stopPropagation()
        onSelect();
      };
    
      return (
-       <TableRow>
+       <TableRow onClick = {click}>
          <TableCell>
            <input
              type="checkbox"
              checked={selected}
              onChange={handleCheckboxChange}
            />
-           {fileName}
          </TableCell>
-         <TableCell>{size}</TableCell>
+         <TableCell>
+          {fileName}
+         </TableCell>
          <TableCell>{type}</TableCell>
-         <TableCell>{/* Last Modified */}</TableCell>
+         <TableCell>{size}</TableCell>
+         <TableCell></TableCell>
+         <TableCell></TableCell>
+         <TableCell></TableCell>
        </TableRow>
      );
 };

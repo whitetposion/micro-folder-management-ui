@@ -1,23 +1,9 @@
-interface File {
-  type: string;
-  size: string;
-  lastModified?: string;
-}
-   
-interface Folder {
-     type: string;
-     children: {
-       [key: string]: File | Folder | {};
-     };
-}
-   
-interface FileData {
-     [key: string]: Folder;
-}
-   
+import { FileData } from "@/type";
+
 export  const fileData: FileData = {
      "app": {
        "type": "folder",
+       "size": "426MB",
        "children": {
          "file1": {
            "type": "file",
@@ -29,6 +15,7 @@ export  const fileData: FileData = {
          },
          "main": {
            "type": "folder",
+           "size": "213MB",
            "children": {
              "src": {
                "type": "folder",
@@ -56,6 +43,7 @@ export  const fileData: FileData = {
          },
          "components": {
            "type": "folder",
+           "size": "320MB",
            "children": {
              "file1": {
                "type": "file",
