@@ -3,6 +3,11 @@ export interface File {
      size: string;
      lastModified?: string;
 }
+export interface Jpeg {
+     type: "jpeg";
+     size: string;
+     lastModified?: string;
+}
       
 export interface Folder {
      type: "folder";

@@ -1,9 +1,10 @@
-import { TableRow, TableCell } from "@mui/material";
-import { Folder, File } from "@/type";
+import { TableRow, TableCell, Checkbox, CssBaseline } from "@mui/material";
+import { Folder, File, Jpeg } from "@/type";
+import { Folder as FolderIcon, File as FileIcon, Image } from "lucide-react";
 
 interface FileComponentProps {
      fileName: string;
-     file: File | Folder ;
+     file: File | Folder | Jpeg ;
      selected: boolean;
      click: () => void;
      onSelect: () => void;
@@ -23,23 +24,22 @@ const FileComponent: React.FC<FileComponentProps> = ({
      };
    
      return (
-       <TableRow onClick = {click}>
-         <TableCell>
-           <input
-             type="checkbox"
-             checked={selected}
-             onChange={handleCheckboxChange}
-           />
-         </TableCell>
-         <TableCell>
+      <>
+      <CssBaseline />
+      <TableRow  onClick={click} style={{ }}>
+        <TableCell>
+          <Checkbox style={{padding: 0}} checked={selected} onChange={handleCheckboxChange} />
+        </TableCell>
+        <TableCell style={{display: "flex", gap: "1rem" , alignItems: 'center'}}>
+          {type === 'file' ? <FileIcon /> : type === 'folder' ? <FolderIcon /> : <Image/>}
           {fileName}
-         </TableCell>
-         <TableCell>{type}</TableCell>
-         <TableCell>{size}</TableCell>
-         <TableCell></TableCell>
-         <TableCell></TableCell>
-         <TableCell></TableCell>
-       </TableRow>
+        </TableCell>
+        <TableCell>{size}</TableCell>
+        <TableCell>{type}</TableCell>
+        <TableCell></TableCell>
+        
+      </TableRow>
+      </>
      );
 };
    

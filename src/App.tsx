@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Breadcrumbs, Table, TableHead, TableRow, TableCell, TableBody, Typography } from '@mui/material';
+import {  Breadcrumbs, Checkbox, Table, TableHead, TableRow, TableCell, TableBody, Typography, Paper, IconButton, CssBaseline  } from '@mui/material';
 import { fileData } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
-import { File, Folder } from './type';
+import { File, Folder, Jpeg } from './type';
+import { ArrowLeft,  RotateCcw } from 'lucide-react';
 
 
 const TopNav: React.FC = () => {
@@ -19,7 +20,7 @@ const TopNav: React.FC = () => {
     // Implement logic to select or unselect all files
   };
 
-  const getCurrentData = (): { [key: string ]: File | Folder | {}}   => {
+  const getCurrentData = (): { [key: string ]: File | Folder | Jpeg | {}}   => {
     // Start with the root folder and navigate based on the path
     let currentData: Folder | File = path.reduce((acc: Folder | File , cur: string): Folder | File  => {
       // Check if the current accumulator is a folder and has the child
@@ -35,55 +36,63 @@ const TopNav: React.FC = () => {
       return {};
     }
   };
-
-  
-  
-  
   
   return (
-    <div>
-      <Breadcrumbs aria-label="breadcrumb">
+    <>
+    <CssBaseline />
+    <Paper elevation={0}  style={{width: "90vw", padding: '20px', margin: '20px' }}>
+      <Breadcrumbs aria-label="breadcrumb" separator="›">
         {path.map((folder, index) => (
-          <Typography key={index} onClick={() => handleBreadcrumbClick(index)}>{folder}</Typography>
+          <Typography key={index} variant="body1" onClick={() => handleBreadcrumbClick(index)}>{folder}</Typography>
         ))}
       </Breadcrumbs>
-      <div>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell><input type="checkbox" onChange={handleSelectAll}/></TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Size</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Last Modified</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      <div style={{ display: 'flex',alignItems: 'center', marginBottom: '10px' }}>
+        <IconButton onClick={() => setPath(path.slice(0, -1))} disabled={path.length === 1}>
+          <ArrowLeft/>
+        </IconButton>
+        <IconButton 
+          onClick={() => {
+              setPath(["app"])
+            }}>
+          <RotateCcw />
+        </IconButton>
+      </div>
+      <Table >
+        <TableHead>
+          <TableRow>
+            <TableCell style={{ width: '10%' }}>
+              <Checkbox style={{ padding: 0 }} checked={selectAll} onChange={handleSelectAll} />
+            </TableCell>
+            <TableCell style={{ width: '50%' }}>Name</TableCell>
+            <TableCell style={{ width: '10%' }}>Size</TableCell>
+            <TableCell style={{ width: '10%' }}>Type</TableCell>
+            <TableCell style={{ width: '15%' }}>Last Modified</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {Object.keys(getCurrentData()).map((fileName) => {
             const fileOrFolder = getCurrentData()[fileName];
-            return(
-            <FileComponent
-              key={fileName}
-              fileName={fileName}
-              file={fileOrFolder as Folder | File  }
-              click={() => {
-                if ('type' in fileOrFolder && fileOrFolder.type === 'folder') {
-                  handleFolderClick(fileName);
-                } else {
-                  console.log('File clicked:', fileName);
-                }
-              }}
-              selected={selectAll}
-              onSelect={() => {}} // Implement file selection logic here
-            />
-          )})}
-
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+            return (
+              <FileComponent
+                key={fileName}
+                fileName={fileName}
+                file={fileOrFolder as Folder | File | Jpeg}
+                click={() => {
+                  if ('type' in fileOrFolder && fileOrFolder.type === 'folder') {
+                    handleFolderClick(fileName);
+                  } else {
+                    console.log('File clicked:', fileName);
+                  }
+                }}
+                selected={selectAll}
+                onSelect={() => {}}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
+  </>
   );
 };
 export default TopNav;
