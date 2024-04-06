@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import {  Breadcrumbs, Checkbox, Table, TableHead, TableRow, TableCell, TableBody, Typography, Paper, IconButton, CssBaseline  } from '@mui/material';
-import { fileData } from "./assets/fileData"
+import { fileData as FolderJson } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
 import { File, Folder, Jpeg } from './type';
 import { ArrowLeft,  RotateCcw } from 'lucide-react';
 
 
 const TopNav: React.FC = () => {
-  const [selectAll, setSelectAll] = useState(false);
+
+  const [fileData, setFileData] = useState(FolderJson)
   const [path , setPath] = useState<string[]>(["app"])
   const handleFolderClick = (folderName: string) => {
     setPath([...path, folderName]);
@@ -15,15 +16,9 @@ const TopNav: React.FC = () => {
   const handleBreadcrumbClick = (index: number) => {
     setPath(path.slice(0, index + 1));
   };
-  const handleSelectAll = () => {
-    setSelectAll(!selectAll);
-    // Implement logic to select or unselect all files
-  };
-
+  
   const getCurrentData = (): { [key: string ]: File | Folder | Jpeg }   => {
-    // Start with the root folder and navigate based on the path
     let currentData: Folder | File | Jpeg  = path.reduce((acc: Folder | File | Jpeg  , cur: string): Folder | File | Jpeg   => {
-      // Check if the current accumulator is a folder and has the child
       if (acc.type === 'folder' && acc.children[cur]) {
         return acc.children[cur];
       }
@@ -36,6 +31,7 @@ const TopNav: React.FC = () => {
       return {};
     }
   };
+  
   
   return (
     <>
@@ -63,20 +59,21 @@ const TopNav: React.FC = () => {
         <TableHead style={{width:"100%"}} >
           <TableRow style={{width:"100%"}} >
             <TableCell style={{ width: '10%' }}>
-              <Checkbox style={{ padding: 0 }} checked={selectAll} onChange={handleSelectAll} />
+              {/* <Checkbox style={{ padding: 0 }} checked={true} onClick={handleSelectAll} /> */}
             </TableCell>
             <TableCell style={{ width: '50%' }}>Name</TableCell>
             <TableCell style={{ width: '10%', textAlign: "center" }}>Size</TableCell>
             <TableCell style={{ width: '10%', textAlign: "center"  }}>Type</TableCell>
             <TableCell style={{ width: '15%', textAlign: "center"  }}>Last Modified</TableCell>
+            <TableCell style={{ width: '5%', textAlign: "center"  }}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(getCurrentData()).map((fileName) => {
+          {Object.keys(getCurrentData()).map((fileName, index) => {
             const fileOrFolder = getCurrentData()[fileName];
             return (
               <FileComponent
-                key={fileName}
+                key={index}
                 fileName={fileName}
                 file={fileOrFolder as Folder | File | Jpeg  }
                 click={() => {
@@ -86,8 +83,6 @@ const TopNav: React.FC = () => {
                     console.log('File clicked:', fileName);
                   }
                 }}
-                selected={selectAll}
-                onSelect={() => {}}
               />
             );
           })}

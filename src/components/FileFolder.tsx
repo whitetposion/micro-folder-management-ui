@@ -1,46 +1,50 @@
 import { TableRow,Typography, TableCell, Checkbox, CssBaseline } from "@mui/material";
 import { Folder, File, Jpeg } from "@/type";
 import { Folder as FolderIcon, File as FileIcon, Image } from "lucide-react";
+import ThreeDotMenu from "./ThreeDotsOptions";
+import { useState } from "react";
+
 
 interface FileComponentProps {
      fileName: string;
      file: File | Folder | Jpeg ;
-     selected: boolean;
      click: () => void;
-     onSelect: () => void;
+    
 }
 const FileComponent: React.FC<FileComponentProps> = ({ 
-     fileName,
-     file,
-     click,
-     selected,
-     onSelect 
+    fileName,
+    file,
+    click
 }) => {
-     const { type, size } = file;
-   
-     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-       e.stopPropagation()
-       onSelect();
-     };
+      const { type, size } = file;
+      const [selectAll, setSelectAll] = useState<boolean>(false);
+      const handleCheckboxChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        setSelectAll(!selectAll)
+      };
    
      return (
       <>
       <CssBaseline />
       <TableRow onClick={click} style={{ }}>
         <TableCell>
-          <Checkbox style={{padding: 0}} checked={selected} onChange={handleCheckboxChange} />
+          <Checkbox style={{padding: 0}} checked={selectAll} onClick={(e)=>handleCheckboxChange(e)} />
         </TableCell>
         <TableCell style={{display: "flex", gap: "1rem", alignItems: 'center'}}>
           {type === 'file' ? <FileIcon /> : type === 'folder' ? <FolderIcon /> : <Image/>}
           <Typography variant="body1" style={{ fontSize: '0.875rem' }}>{fileName}</Typography>
         </TableCell>
         <TableCell style={{ textAlign: "center" }}>
-          <Typography variant="body2" style={{ fontSize: '0.75rem' }}>{size}</Typography>
+          <Typography variant="body1" style={{ fontSize: '0.75rem' }}>{size}</Typography>
         </TableCell>
         <TableCell style={{ textAlign: "center" }}>
-          <Typography variant="body2" style={{ fontSize: '0.75rem' }}>{type}</Typography>
+          <Typography variant="body1" style={{ fontSize: '0.75rem' }}>{type}</Typography>
         </TableCell>
-        <TableCell></TableCell>
+        <TableCell style={{ textAlign: "center" }}> 
+        </TableCell>
+        <TableCell>
+          <ThreeDotMenu/>
+        </TableCell>
       </TableRow>
       </>
      );
