@@ -40,7 +40,9 @@ const TopNav: React.FC = () => {
   return (
     <>
     <CssBaseline />
-    <Paper elevation={0}  style={{width: "90vw", padding: '20px', margin: '20px' }}>
+    <Paper elevation={0}  
+      style={{width: "90vw", margin: '20px' }}
+      >
       <Breadcrumbs aria-label="breadcrumb" separator="›">
         {path.map((folder, index) => (
           <Typography key={index} variant="body1" onClick={() => handleBreadcrumbClick(index)}>{folder}</Typography>
@@ -57,16 +59,16 @@ const TopNav: React.FC = () => {
           <RotateCcw />
         </IconButton>
       </div>
-      <Table >
-        <TableHead>
-          <TableRow>
+      <Table style={{width:"100%"}} >
+        <TableHead style={{width:"100%"}} >
+          <TableRow style={{width:"100%"}} >
             <TableCell style={{ width: '10%' }}>
               <Checkbox style={{ padding: 0 }} checked={selectAll} onChange={handleSelectAll} />
             </TableCell>
             <TableCell style={{ width: '50%' }}>Name</TableCell>
-            <TableCell style={{ width: '10%' }}>Size</TableCell>
-            <TableCell style={{ width: '10%' }}>Type</TableCell>
-            <TableCell style={{ width: '15%' }}>Last Modified</TableCell>
+            <TableCell style={{ width: '10%', textAlign: "center" }}>Size</TableCell>
+            <TableCell style={{ width: '10%', textAlign: "center"  }}>Type</TableCell>
+            <TableCell style={{ width: '15%', textAlign: "center"  }}>Last Modified</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

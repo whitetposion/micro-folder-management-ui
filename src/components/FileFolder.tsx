@@ -1,4 +1,4 @@
-import { TableRow, TableCell, Checkbox, CssBaseline } from "@mui/material";
+import { TableRow,Typography, TableCell, Checkbox, CssBaseline } from "@mui/material";
 import { Folder, File, Jpeg } from "@/type";
 import { Folder as FolderIcon, File as FileIcon, Image } from "lucide-react";
 
@@ -26,18 +26,21 @@ const FileComponent: React.FC<FileComponentProps> = ({
      return (
       <>
       <CssBaseline />
-      <TableRow  onClick={click} style={{ }}>
+      <TableRow onClick={click} style={{ }}>
         <TableCell>
           <Checkbox style={{padding: 0}} checked={selected} onChange={handleCheckboxChange} />
         </TableCell>
-        <TableCell style={{display: "flex", gap: "1rem" , alignItems: 'center'}}>
+        <TableCell style={{display: "flex", gap: "1rem", alignItems: 'center'}}>
           {type === 'file' ? <FileIcon /> : type === 'folder' ? <FolderIcon /> : <Image/>}
-          {fileName}
+          <Typography variant="body1" style={{ fontSize: '0.875rem' }}>{fileName}</Typography>
         </TableCell>
-        <TableCell>{size}</TableCell>
-        <TableCell>{type}</TableCell>
+        <TableCell style={{ textAlign: "center" }}>
+          <Typography variant="body2" style={{ fontSize: '0.75rem' }}>{size}</Typography>
+        </TableCell>
+        <TableCell style={{ textAlign: "center" }}>
+          <Typography variant="body2" style={{ fontSize: '0.75rem' }}>{type}</Typography>
+        </TableCell>
         <TableCell></TableCell>
-        
       </TableRow>
       </>
      );
