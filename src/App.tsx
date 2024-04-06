@@ -4,7 +4,6 @@ import { fileData } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
 import { File, Folder, Jpeg } from './type';
 import { ArrowLeft,  RotateCcw } from 'lucide-react';
-import EmptyPage from './components/EmptyPage';
 
 
 const TopNav: React.FC = () => {
