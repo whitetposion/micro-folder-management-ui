@@ -13,8 +13,8 @@ export interface Folder {
      type: "folder";
      size: string;
      children: {
-          [key: string]: File | Folder | {};
-     };
+          [key: string]: File | Folder | Jpeg ;
+     } ;
 }
       
 export interface FileData {

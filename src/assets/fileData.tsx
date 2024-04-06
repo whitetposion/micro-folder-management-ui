@@ -1,45 +1,4 @@
-import { FileData, File, Folder } from "@/type";
-
-// Function to generate a new file with a random size
-const generateFile = (): File => {
-  const types = ["file", "jpeg"]; // Types including "jpeg"
-  const randomType = types[Math.floor(Math.random() * types.length)]; // Randomly select a type
-  const size = (Math.random() * 100).toFixed(2) + "MB"; // Generate a random size
-  return { type: randomType, size };
-};
-
-// Function to generate a new folder with a random size
-const generateFolder = (): Folder => {
-  const size = (Math.random() * 100).toFixed(2) + "MB"; // Generate a random size
-  return { type: "folder", size, children: {} };
-};
-
-// Function to generate additional folders and files recursively
-const generateAdditionalFoldersAndFiles = (data: Folder["children"], levels: number): void => {
-  if (levels <= 0 || !data) return;
-
-  // Generate random number of files and folders to add
-  const numFiles = Math.floor(Math.random() * 5) + 1; // Random number of files between 1 and 5
-  const numFolders = Math.floor(Math.random() * 3) + 1; // Random number of folders between 1 and 3
-
-  for (let i = 0; i < numFiles; i++) {
-    const fileName = `file${i + 1}`;
-    data[fileName] = generateFile();
-  }
-
-  for (let i = 0; i < numFolders; i++) {
-    const folderName = `folder${i + 1}`;
-    data[folderName] = generateFolder();
-    generateAdditionalFoldersAndFiles(data[folderName]?.children, levels - 1); // Recursively generate folders and files inside this folder
-  }
-};
-
-// Function to generate or populate more folders and files
-const populateFileData = (fileData: FileData, levels: number): void => {
-  generateAdditionalFoldersAndFiles(fileData.app.children, levels);
-};
-
-// Usage example
+import { FileData } from "@/type";
 
 
 export  const fileData: FileData = {
@@ -103,6 +62,11 @@ export  const fileData: FileData = {
           }
         }
       },
+      "subfolder2": {
+        "type": "folder",
+        "size": "63.45MB",
+        "children": {}
+      },
       "components": {
         "type": "folder",
         "size": "320MB",
@@ -138,8 +102,3 @@ export  const fileData: FileData = {
     }
   }
 }
-
-
-// populateFileData(fileData, 2); // Generate additional folders and files up to 2 levels deep
-
-console.log(fileData); // Updated file data with additional folders and files

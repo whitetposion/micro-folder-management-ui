@@ -4,6 +4,7 @@ import { fileData } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
 import { File, Folder, Jpeg } from './type';
 import { ArrowLeft,  RotateCcw } from 'lucide-react';
+import EmptyPage from './components/EmptyPage';
 
 
 const TopNav: React.FC = () => {
@@ -20,15 +21,15 @@ const TopNav: React.FC = () => {
     // Implement logic to select or unselect all files
   };
 
-  const getCurrentData = (): { [key: string ]: File | Folder | Jpeg | {}}   => {
+  const getCurrentData = (): { [key: string ]: File | Folder | Jpeg }   => {
     // Start with the root folder and navigate based on the path
-    let currentData: Folder | File = path.reduce((acc: Folder | File , cur: string): Folder | File  => {
+    let currentData: Folder | File | Jpeg  = path.reduce((acc: Folder | File | Jpeg  , cur: string): Folder | File | Jpeg   => {
       // Check if the current accumulator is a folder and has the child
       if (acc.type === 'folder' && acc.children[cur]) {
         return acc.children[cur];
       }
       return acc; 
-    }, fileData.app as Folder | File ); 
+    }, fileData.app as Folder | File| Jpeg  ); 
     if (currentData.type === 'folder') {
       return currentData.children;
     }
@@ -78,7 +79,7 @@ const TopNav: React.FC = () => {
               <FileComponent
                 key={fileName}
                 fileName={fileName}
-                file={fileOrFolder as Folder | File | Jpeg}
+                file={fileOrFolder as Folder | File | Jpeg  }
                 click={() => {
                   if ('type' in fileOrFolder && fileOrFolder.type === 'folder') {
                     handleFolderClick(fileName);
