@@ -3,7 +3,7 @@ import {  Breadcrumbs, Table, TableHead, TableRow, TableCell, TableBody, Typogra
 import { fileData  } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
 import { File, Folder, Jpeg } from './type';
-import { ArrowLeft,  RotateCcw } from 'lucide-react';
+import { ArrowLeft, RotateCcw} from 'lucide-react';
 
 
 const TopNav: React.FC = () => {
@@ -39,21 +39,21 @@ const TopNav: React.FC = () => {
     <Paper elevation={0}  
       style={{width: "90vw", margin: '20px' }}
       >
-      <Breadcrumbs aria-label="breadcrumb" separator="›">
-        {path.map((folder, index) => (
-          <Typography key={index} variant="body1" onClick={() => handleBreadcrumbClick(index)}>{folder}</Typography>
-        ))}
-      </Breadcrumbs>
       <div style={{ display: 'flex',alignItems: 'center', marginBottom: '10px' }}>
-        <IconButton onClick={() => setPath(path.slice(0, -1))} disabled={path.length === 1}>
-          <ArrowLeft/>
-        </IconButton>
         <IconButton 
           onClick={() => {
               setPath(["app"])
             }}>
           <RotateCcw />
         </IconButton>
+        <IconButton onClick={() => setPath(path.slice(0, -1))} disabled={path.length === 1}>
+          <ArrowLeft/>
+        </IconButton>
+        <Breadcrumbs style={{paddingLeft: 20}} aria-label="breadcrumb" separator="›">
+        {path.map((folder, index) => (
+          <Typography key={index} variant="body1" onClick={() => handleBreadcrumbClick(index)}>{folder}</Typography>
+        ))}
+      </Breadcrumbs>
       </div>
       <Table style={{width:"100%"}} >
         <TableHead style={{width:"100%"}} >
