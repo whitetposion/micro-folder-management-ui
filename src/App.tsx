@@ -1,6 +1,6 @@
 import React, {  useState } from 'react';
-import {  Breadcrumbs, Checkbox, Table, TableHead, TableRow, TableCell, TableBody, Typography, Paper, IconButton, CssBaseline  } from '@mui/material';
-import { fileData as FolderJson } from "./assets/fileData"
+import {  Breadcrumbs, Table, TableHead, TableRow, TableCell, TableBody, Typography, Paper, IconButton, CssBaseline  } from '@mui/material';
+import { fileData  } from "./assets/fileData"
 import FileComponent from './components/FileFolder';
 import { File, Folder, Jpeg } from './type';
 import { ArrowLeft,  RotateCcw } from 'lucide-react';
@@ -8,7 +8,7 @@ import { ArrowLeft,  RotateCcw } from 'lucide-react';
 
 const TopNav: React.FC = () => {
 
-  const [fileData, setFileData] = useState(FolderJson)
+  // const [fileData, setFileData] = useState(FolderJson)
   const [path , setPath] = useState<string[]>(["app"])
   const handleFolderClick = (folderName: string) => {
     setPath([...path, folderName]);

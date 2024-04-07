@@ -44,7 +44,7 @@ const ThreeDotMenu = () => {
      <Menu
           anchorEl={anchorEl}
           open={open}
-          style={{ width: "300px" }} // Increase the width of the menu
+          style={{ width: "300px" }} 
           onClose={handleClose}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           transformOrigin={{ vertical: 'top', horizontal: 'right' }}
