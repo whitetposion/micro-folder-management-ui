@@ -3,6 +3,7 @@ import { Folder, File, Jpeg } from "@/type";
 import { Folder as FolderIcon, File as FileIcon, Image } from "lucide-react";
 import ThreeDotMenu from "./ThreeDotsOptions";
 import { useState } from "react";
+import { formatDateToDDMMYYYY } from "./../utility";
 
 
 interface FileComponentProps {
@@ -16,7 +17,7 @@ const FileComponent: React.FC<FileComponentProps> = ({
     file,
     click
 }) => {
-      const { type, size } = file;
+      const { type, size, lastModified } = file;
       const [selectAll, setSelectAll] = useState<boolean>(false);
       const handleCheckboxChange = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
@@ -41,6 +42,7 @@ const FileComponent: React.FC<FileComponentProps> = ({
           <Typography variant="body1" style={{ fontSize: '0.75rem' }}>{type}</Typography>
         </TableCell>
         <TableCell style={{ textAlign: "center" }}> 
+         <Typography variant="body1" style={{ fontSize: '0.75rem' }}>{formatDateToDDMMYYYY(lastModified)}</Typography>
         </TableCell>
         <TableCell>
           <ThreeDotMenu/>
